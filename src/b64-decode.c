@@ -197,6 +197,7 @@ VERSION HISTORY:
 \******************************************************************* */
 
 #include "base64.h"
+#include <stdio.h>
 
 static void decodeblock( const uint8_t *in, uint8_t *out, int len );
 static size_t decode_core( const uint8_t *table, uint8_t start,
@@ -258,11 +259,13 @@ size_t b64_get_decoded_buffer_size( const size_t encoded_size )
 */
 size_t b64_decode( const uint8_t *input, const size_t input_size, uint8_t *output )
 {
+    printf("Inside b64_decode func\n");
     /*
     ** Translation Table to decode (created by author)
     */
     static const uint8_t cd64[]="|$$$}rstuvwxyz{$$$$$$$>?@ABCDEFGHIJKLMNOPQRSTUVW$$$$$$XYZ[\\]^_`abcdefghijklmnopq";
 
+    printf("b64_decode func input %s, input_size %d\n",input, input_size);
     return decode_core( cd64, 43, input, input_size, output );
 }
 
@@ -318,5 +321,6 @@ static size_t decode_core( const uint8_t *table, uint8_t start,
             out += len - 1;
         }
     }
+    printf("Before return decode_core\n");
     return (out - output);
 }
